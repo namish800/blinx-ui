@@ -1,0 +1,18 @@
+.desktop-menu-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    background: #000;
+    height: 100vh;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 0 10px;
+}
+
+
+.desktop-menu-link{
+    color: #fff;
+    padding: 20px 0; 
+    text-align: center;
+    font-family: var(--font-poppins);
+}
