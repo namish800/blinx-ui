@@ -52,6 +52,7 @@ const BlogViews = ({progress, setProgress}: BlogViews) => {
     const [selectedTitle, setSelectedTitle] = useState("");
     const [titleList, setTitleList] = useState([]);
     const [outlines, setOutlines] = useState<Outlines>({});
+    const [finalOutlines, setFinalOutlines] = useState<any>({});
     const [finalBlog, setFinalBlog] = useState([]);
     const [loadingTitles, setLoadingTitles] = useState(false);
     const [loadingOutline, setLoadingOutline] = useState(false);
@@ -89,26 +90,47 @@ const BlogViews = ({progress, setProgress}: BlogViews) => {
 
 
     const generateOutline = async () =>{
-        setLoadingOutline(true);
-        const res = await generateOutlines(selectedTitle, sessionId);
-        if(res?.step_output?.state?.introduction){
-            setOutlines({
-                ...outlines,
-                selected_title: res?.step_output?.state?.selected_title || "",
-                introduction: res?.step_output?.state?.introduction || "",
-                sections: res?.step_output?.state?.sections || []
-            });
-            setProgress(progress++);
+        if(selectedTitle){
+            setLoadingOutline(true);
+            let temp: any = {};
+            const res = await generateOutlines(selectedTitle, sessionId);
+            if(res?.step_output?.state?.introduction){
+                setOutlines({
+                    ...outlines,
+                    selected_title: res?.step_output?.state?.selected_title || "",
+                    introduction: res?.step_output?.state?.introduction || "",
+                    sections: res?.step_output?.state?.sections || []
+                });
+                setProgress(progress+1);
+                res?.step_output?.state?.sections.length > 0 && res?.step_output?.state?.sections.forEach((element: any) => {
+                    temp[element.section_header] = element.description;
+                });
+                setFinalOutlines({
+                    ...temp
+                })
+            }
+            setLoadingOutline(false);
         }
-        setLoadingOutline(false);
+    }
+
+    const updateOutline = (sectionHeader: string, updatedDesc: string) => {
+        setFinalOutlines({
+            ...finalOutlines,
+            [sectionHeader] : updatedDesc
+        })
     }
 
     const finaliseBlog = async () => {
         setLoadingFinalBlog(true);
-        const res = await generateFinalBlog(JSON.stringify(outlines?.sections), sessionId);
+        const res = await generateFinalBlog(JSON.stringify(Object.keys(finalOutlines).map((element: string, index: number) => {
+            return({
+                section_header: element,
+                description: finalOutlines[element]
+            })
+        })), sessionId);
         if(res?.step_output?.state?.generated_sections.length > 0){
             setFinalBlog(res?.step_output?.state?.generated_sections);
-            setProgress(progress++)
+            setProgress(progress+1)
         }
         setLoadingFinalBlog(false);
     }
@@ -131,7 +153,7 @@ const BlogViews = ({progress, setProgress}: BlogViews) => {
                 <h2>Blog Topic</h2>
                 <p className="stageHeading">What would you like to write about? *</p>
                 <input type="textArea" className="appInput" name="blogTopic" placeholder="Enter detailed description for blog idea" onChange={ handleChange } value={formData?.blogTopic} />
-                <p>{formData?.blogTopic}</p>
+                {/* <p>{formData?.blogTopic}</p> */}
                 <div className="stageControls">
                     {/* <button disabled={(loadingTitles || progress) ? true : false} onClick={goBack}>Back</button>                     */}
                     <button onClick={() => startBlog(formData?.blogTopic)} className={(formData?.blogTopic?.length < 10 || loadingTitles) ? "appButton disabled" : "appButton"} disabled={formData?.blogTopic?.length < 10 || loadingTitles}>
@@ -147,52 +169,61 @@ const BlogViews = ({progress, setProgress}: BlogViews) => {
                 <div className="titleListWrapper">
                     {titleList.length > 0 && titleList.map((e, index) => {
                         return(
-                        <div className="titleWrapper" key={index} onClick={() => selectTitle(e)}>
-                            <div className={`titleRadio ${e === selectedTitle ? 'active': ''}`}></div>
+                        <div className={`${e === selectedTitle ? 'active titleWrapper': 'titleWrapper'}`} key={index} onClick={() => selectTitle(e)}>
+                            {/* <div className={`titleRadio ${e === selectedTitle ? 'active': ''}`}></div> */}
                             <div className="titlePicker" key={index}>
-                                <p className="titleNumber">{`#Title ${index}`}</p>
+                                <p className="titleNumber">{`#Title ${index++}`}</p>
                                 <p className="title">{`${e}`}</p>
                             </div>
                         </div>
                         )})
                     }
                 </div>
-                <p>{selectedTitle}</p>
+                {/* <p>{selectedTitle}</p> */}
                 <div className="stageControls">
-                    <button onClick={goBack}>Back</button>                     
-                    <button onClick={generateOutline} disabled={loadingOutline} >{loadingOutline ? "Generating..." : `Generate Outline`}</button>
-                    {Object.keys(outlines).length>0 && <button onClick={goNext}>Next</button>}
+                    <button className={'appButton'} onClick={goBack}>Back</button>                     
+                    <button onClick={generateOutline} className={(loadingOutline || !selectedTitle) ? 'appButton disabled' : 'appButton'} disabled={loadingOutline || !selectedTitle} >{loadingOutline ? "Generating..." : `Generate Outline`}</button>
+                    {Object.keys(outlines).length>0 && <button className={'appButton'} onClick={goNext}>Next</button>}
                 </div>
-                {outlines && <pre>{JSON.stringify( outlines, null, 2)}</pre>}
+                {/* {outlines && <pre>{JSON.stringify( outlines, null, 2)}</pre>} */}
             </div>)
         case 2:
             return  (<div className="stagePage">
                 <h2>Blog Outline</h2>
                 <p className="stageHeading">Edit your outline as desired</p>
-                <p className="blogIntro">{outlines?.introduction}</p>
-                {Object.keys(outlines).length > 0 && outlines?.sections?.length! > 0 && outlines?.sections!.map((section: any, index: number) => {
+                <div className="blogTable">
+                    <p className="tableHeading">Intro</p>
+                    <p className="blogIntro">{outlines?.introduction}</p>
+                </div>
+                {Object.keys(outlines).length > 0 && Object.keys(finalOutlines).length > 0 && outlines?.sections?.length! > 0 && outlines?.sections!.map((section: any, index: number) => {
                     return(
                         <div className="generatedSection" key={index}>
-                            <p className="sectionHeading">Section Heading</p>
-                            <h2>{section?.section_header}</h2>
-                            <p className="sectionHeading">Section Description</p>
-                            <p>{section?.description}</p>
+                            <div className="blogTable">
+                                <p className="sectionHeading">Heading</p>
+                                <h2>{section?.section_header}</h2>
+                            </div>
+                            <div className="blogTable">
+                                <p className="sectionHeading">Description</p>
+                                <input type="textarea" value={finalOutlines[section?.section_header]} className="appTextArea" onChange={(event) => updateOutline(section?.section_header, event.target.value)} />
+                            </div>
                         </div>
                     )
                 })}
                 <div className="stageControls">
-                    <button onClick={goBack}>Back</button>                     
-                    <button onClick={finaliseBlog}>Finalise Blog</button>
+                    <button onClick={goBack} className="appButton">Back</button>                     
+                    <button onClick={finaliseBlog} className={loadingFinalBlog ? 'appButton disabled' : 'appButton'}>{loadingFinalBlog ? 'Finalising Blog...' : 'Finalise Blog'}</button>
                 </div>
             </div>) 
         case 3: 
-            return <div className="stagePage">
-                <h1>Final Blog</h1>
+            return <div className="stagePage finalBlogView">
+                <h2>Final Blog</h2>
+                {/* <p className="stageHeading">Your final blog!</p> */}
+                <h1 className="finalBlogTitle">{selectedTitle}</h1>
                 <p className="finalBlogIntro">{outlines?.introduction}</p>
                 {finalBlog.length > 0 && finalBlog.map((section: any, index: number) => {
                     return(
                         <div key={index} className="finalBlogSection">
-                            <h3>{section?.section_header}</h3>
+                            <h3 className="finalBlogSubHeadings">{section?.section_header}</h3>
                             <p>{section?.section_content}</p>
                         </div>
                     )

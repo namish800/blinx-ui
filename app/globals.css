@@ -45,6 +45,8 @@ a {
   flex-direction: row;
   justify-content: start;
   align-items: start;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 
@@ -72,11 +74,14 @@ a {
   font-family: var(--font-poppins);
   font-weight: 600;
   transition: 0.5s all;
+  margin-right: 10px;
+  cursor: pointer;
 }
 
 .appButton.disabled{
   background: rgba(255, 255, 255, 0.5);
   color: rgba(0,0,0,0.8);
+  cursor: unset;
 }
 
 .appButton.disabled:hover{
@@ -90,6 +95,21 @@ a {
   color: #fff;
   box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
 }
+
+
+.appTextArea{
+  width: 100%;
+  background: #000;
+  border: 0px;
+  border-bottom: 1px solid #fff;
+  padding: 20px 5px;
+  color: #fff;
+  font-family: var(--font-poppinss);
+}
+
+.appTextArea:focus-visible{
+  outline: 0px;
+} 
 
 
 
