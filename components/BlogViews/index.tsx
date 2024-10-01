@@ -126,24 +126,21 @@ const BlogViews = ({progress, setProgress}: BlogViews) => {
     }
 
     switch(progress){
-        case 1:
+        case 0:
             return (<div className="stagePage">
                 <h2>Blog Topic</h2>
                 <p className="stageHeading">What would you like to write about? *</p>
-                <input type="textArea" className="stageInput" name="blogTopic" placeholder="Enter detailed description for blog idea" onChange={ handleChange } value={formData?.blogTopic} />
+                <input type="textArea" className="appInput" name="blogTopic" placeholder="Enter detailed description for blog idea" onChange={ handleChange } value={formData?.blogTopic} />
                 <p>{formData?.blogTopic}</p>
                 <div className="stageControls">
-                    <button disabled={progress ? true : false} onClick={goBack}>Back</button>                    
-                    <button onClick={() => startBlog(formData?.blogTopic)} disabled={formData?.blogTopic?.length < 10}>
+                    {/* <button disabled={(loadingTitles || progress) ? true : false} onClick={goBack}>Back</button>                     */}
+                    <button onClick={() => startBlog(formData?.blogTopic)} className={(formData?.blogTopic?.length < 10 || loadingTitles) ? "appButton disabled" : "appButton"} disabled={formData?.blogTopic?.length < 10 || loadingTitles}>
                         {!loadingTitles ? "Generate Titles" : "Generating..."}
                     </button>
-                    {Object.keys(titleList).length>0 && <button onClick={goNext}>Next</button>}
+                    {Object.keys(titleList).length>0 && <button className="appButton" onClick={goNext}>Next</button>}
                 </div>
-                <div>{
-                    Object.keys(titleList).length>0 && <pre>{JSON.stringify(titleList, null, 2)}</pre>
-                    }</div>
             </div>)
-        case 2: 
+        case 1: 
             return (<div className="stagePage">
                 <h2>Blog Title</h2>
                 <p className="stageHeading">Pick a title for your post.</p>
@@ -168,7 +165,7 @@ const BlogViews = ({progress, setProgress}: BlogViews) => {
                 </div>
                 {outlines && <pre>{JSON.stringify( outlines, null, 2)}</pre>}
             </div>)
-        case 3:
+        case 2:
             return  (<div className="stagePage">
                 <h2>Blog Outline</h2>
                 <p className="stageHeading">Edit your outline as desired</p>
@@ -188,7 +185,7 @@ const BlogViews = ({progress, setProgress}: BlogViews) => {
                     <button onClick={finaliseBlog}>Finalise Blog</button>
                 </div>
             </div>) 
-        case 4: 
+        case 3: 
             return <div className="stagePage">
                 <h1>Final Blog</h1>
                 <p className="finalBlogIntro">{outlines?.introduction}</p>

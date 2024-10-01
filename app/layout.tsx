@@ -31,7 +31,6 @@ export default function RootLayout({
         <div className='blinx-app-wrapper'>
           <MenuBar />
           {children}
-
         </div>
       </body>
     </html>

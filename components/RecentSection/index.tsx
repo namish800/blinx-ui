@@ -1,3 +1,5 @@
+import './style.scss'
+
 const RecentSection = () => {
     return(
         <section className="recent-files-wrapper">

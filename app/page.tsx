@@ -17,13 +17,11 @@ import AnalyticSection from "@/components/AnalyticsSection";
 
 export default function Home() {
   return (
-    <div className={`poppins ${styles.page}`}>
+    <div className={`poppins ${styles.landingPage}`}>
       <main className={styles.main}>
-        <div className="landing-banner">
-          {/* <Image 
-
-          /> */}
-          <button>Brand Persona</button>
+        <div className={styles.landingBanner}>
+          {/* <Image /> */}
+          <button className={styles.brandButton}>Add Brand Persona</button>
         </div>
         <RecentSection />
         <AnalyticSection />

@@ -9,11 +9,15 @@
  */
 
 
-import PersonaTabs from "@/components/PersonaTabs";
+
+import dynamic from 'next/dynamic';
+import './style.scss'
+
+const PersonaTabs = dynamic(()=>import("@/components/PersonaTabs"))
 
 const Persona = () => {
     return(
-        <div className="persona-page">
+        <div className="personaPage">
             <h1>Add content so that we can analyse your brand</h1>
             <PersonaTabs />
         </div>

@@ -1,6 +1,6 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
   /* --font-poppins: 'Poppins', sans-serif; */
 }
 
@@ -46,6 +46,52 @@ a {
   justify-content: start;
   align-items: start;
 }
+
+
+
+.appInput{
+  padding: 20px 5px;
+  width: 300px;
+  border-radius: 0px;
+  border: 0px;
+  border-bottom: 1px solid #fff;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-poppinss);
+  margin: 30px 0;
+}
+
+.appInput:focus-visible{
+  outline: 0px;
+} 
+
+.appButton{
+  padding: 15px 30px;
+  background: #fff;
+  border-radius: 10px;
+  font-family: var(--font-poppins);
+  font-weight: 600;
+  transition: 0.5s all;
+}
+
+.appButton.disabled{
+  background: rgba(255, 255, 255, 0.5);
+  color: rgba(0,0,0,0.8);
+}
+
+.appButton.disabled:hover{
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow:  0 0 0;
+  color: rgba(0,0,0,0.8);
+}
+
+.appButton:hover{
+  background: #000;
+  color: #fff;
+  box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
+}
+
+
 
 @media (prefers-color-scheme: dark) {
   html {

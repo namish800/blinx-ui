@@ -1,0 +1,19 @@
+.personaPage{
+    padding: 60px;
+    font-family: var(--font-poppins);
+
+    h1{
+        margin-bottom: 30px;
+    }
+
+    h3{
+        margin-bottom: 10px;
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+    }
+}

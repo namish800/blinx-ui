@@ -8,13 +8,18 @@
  *
  */
 
-import Image from "next/image"
-import Link from "next/link"
-import Logo from "../../app/assets/images/blinx_logo.png"
-import "./style.scss"
 
+"use client"
+
+
+import Image from "next/image";
+import Link from "next/link";
+import Logo from "../../app/assets/images/blinx_logo.png";
+import "./style.scss";
+import { usePathname } from 'next/navigation'
 
 const MenuBar = () => {
+    const currentPath = usePathname();
     return(
         <div className="desktop-menu-wrapper">
             <Image 
@@ -22,11 +27,11 @@ const MenuBar = () => {
                 alt="logo"
                 width={150}
             />
-            <Link href={"/"} className="desktop-menu-link">Home</Link>
-            <Link href={"/persona"} className="desktop-menu-link">Brand Persona</Link>
-            <Link href={"/blog-generator"} className="desktop-menu-link">Blog Generator</Link>
-            <Link href={"/ad-generator"} className="desktop-menu-link">FB Ad Generator</Link>
-            <Link href={"/post-generator"} className="desktop-menu-link">Post Generator</Link>
+            <Link href={"/"} className={currentPath==="/" ? "desktop-menu-link active" : "desktop-menu-link"}>Home</Link>
+            <Link href={"/persona"} className={currentPath.includes("persona") ? "desktop-menu-link active" : "desktop-menu-link"}>Brand Persona</Link>
+            <Link href={"/blog-generator"} className={currentPath.includes("blog-generator") ? "desktop-menu-link active" : "desktop-menu-link"}>Blog Generator</Link>
+            <Link href={"/ad-generator"} className={currentPath.includes("ad-generator") ? "desktop-menu-link active" : "desktop-menu-link"}>FB Ad Generator</Link>
+            <Link href={"/post-generator"} className={currentPath.includes("post-generator") ? "desktop-menu-link active" : "desktop-menu-link"}>Post Generator</Link>
         </div>
     )
 }

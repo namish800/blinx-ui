@@ -1,8 +1,10 @@
+import './style.scss';
+
 const AnalyticSection = () => {
     return(
         <div className="analytics-section-wrapper">
-            <h2 className="section-heading">Analytics</h2>
-            <button className="service-button">+ Connect Social Account</button>
+            <h2 className="sectionHeading">Analytics</h2>
+            <button className="appButton">+ Connect Social Account</button>
         </div>
     )
 }

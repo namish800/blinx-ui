@@ -7,7 +7,7 @@ interface BlogProgressProps{
 export default function({progress}: BlogProgressProps){
     return(
         <>        
-        <LinearProgress sx={{}} value={progress*25} variant="determinate"/>
+            <LinearProgress sx={{marginBottom: "20px"}} value={progress*33.33333} variant="determinate"/>
         </>
     )
 }

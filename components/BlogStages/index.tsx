@@ -24,11 +24,11 @@ interface Props {
 
 const BlogStages = (props: any) => {
     // const {stage} = props;
-    const [progress, setProgress] = useState(1);
+    const [progress, setProgress] = useState(0);
 
     return(
-        <div className='blogWrapperMain'>
-            <h1>{`Blog View ${progress}`}</h1>
+        <div className='blogWrapperMain poppins'>
+            {/* <h1>{`Blog View ${progress}`}</h1> */}
             <BlogProgress progress={progress} />
             <BlogViews progress={progress} setProgress={setProgress} />
         </div>
