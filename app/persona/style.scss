@@ -16,4 +16,23 @@
         justify-content: start;
         align-items: start;
     }
+    
+    .personaItemListWrapper{
+        width: 100%;
+        padding: 20px;
+        border: 1px solid #fff;
+        border-radius: 12px;
+        display: flex;
+        justify-content: start;
+        margin: 20px 0 40px;
+
+        .personaItem{
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: #fff;
+            color: #000;
+            font-size: 0.7rem;
+            margin-right: 5px;
+        }
+    }
 }
