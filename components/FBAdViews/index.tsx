@@ -68,7 +68,6 @@ const FBAdViews = () => {
 
     return(
         <div className="fbAdStarter">
-            <h1>{progress}</h1>
             {
                 progress === 0 && <div className="fbAdView">
                     <h1>Fb Ad Generator</h1>
