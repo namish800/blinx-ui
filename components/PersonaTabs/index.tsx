@@ -58,7 +58,7 @@ export default function(){
 
 
     return(
-        <>
+        <>       
             {loading && 
                 <div className="loadingPersona">
                     <h1>Loading Persona...</h1>
@@ -92,6 +92,7 @@ export default function(){
             }
             {Object.keys(persona).length > 0 && 
                 <div className="brandPeronaWrapper">
+                    <h1 style={{marginBottom: "30px"}}>Your Brand Persona</h1>
                     {persona?.purpose.length > 0 &&
                         <>
                             <h3>Purpose</h3>

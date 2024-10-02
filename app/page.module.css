@@ -32,6 +32,26 @@
 }
 
 
+.commonContents{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 30px;
+  margin: 20px 0 40px;
+}
+
+.contentType{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+  cursor: pointer;
+}
+
+.contentTypeName{
+  font-weight: 700;
+}
+
 
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
