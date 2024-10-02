@@ -8,14 +8,14 @@
  *
  */
 
-import FBAdStarter from "@/components/FBAdViews";
-
+import './style.scss'
+import FBAdViews from "@/components/FBAdViews";
 
 
 export default function(){
     return(
         <div className="adGeneratorWrapper">
-            <FBAdStarter />
+            <FBAdViews />
         </div>
     )
 }
