@@ -1,7 +1,5 @@
-// pages/index.tsx
 "use client"
 
-// pages/index.tsx
 import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';  // To render raw HTML
@@ -26,13 +24,13 @@ interface TaskStatusResponse {
 
 interface Analysis {
   sessionId: string;
-  videoUrl: string;
+  fileName: string;
   status: string;
   markdownContent?: string;
 }
 
 export default function Home() {
-  const [videoUrl, setVideoUrl] = useState<string>('');
+  const [file, setFile] = useState<File | null>(null);
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [error, setError] = useState<string>('');
 
@@ -63,15 +61,19 @@ export default function Home() {
     e.preventDefault();
     setError('');
 
+    if (!file) {
+      setError('Please upload a video file.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
     try {
-      const response = await fetch(
-        `https://blinx-backend-eze3e9drepffcte5.centralindia-01.azurewebsites.net/analyseVideo?video_url=${encodeURIComponent(
-          videoUrl
-        )}`,
-        {
-          method: 'POST',
-        }
-      );
+      const response = await fetch('https://blinx-backend-eze3e9drepffcte5.centralindia-01.azurewebsites.net/analyseVideo', {
+        method: 'POST',
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -81,12 +83,12 @@ export default function Home() {
       if (data.session_id) {
         const newAnalysis: Analysis = {
           sessionId: data.session_id,
-          videoUrl,
+          fileName: file.name,
           status: 'processing',
         };
         setAnalysis(newAnalysis);
         pollStatus(data.session_id);
-        setVideoUrl(''); // Clear input field
+        setFile(null); // Clear the file input after submission
       } else {
         setError('Failed to initiate video analysis.');
       }
@@ -128,7 +130,6 @@ export default function Home() {
           );
           setError('Error processing the video.');
         }
-        // Handle other statuses if necessary
       } catch (error) {
         clearInterval(intervalId);
         setAnalysis((prevAnalysis) =>
@@ -139,20 +140,20 @@ export default function Home() {
         setError('Error polling taskStatus API.');
         console.error('Error:', error);
       }
-    }, 5000);
+    }, 10000);
   };
 
   return (
     <div>
       <h1>Video Analysis</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <input
-          type="text"
-          value={videoUrl}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setVideoUrl(e.target.value)
-          }
-          placeholder="Enter YouTube URL"
+          type="file"
+          accept="video/*"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            const selectedFile = e.target.files ? e.target.files[0] : null;
+            setFile(selectedFile);
+          }}
           required
         />
         <button type="submit">Analyze Video</button>
@@ -164,7 +165,7 @@ export default function Home() {
       {analysis && (
         <div>
           <p>
-            <strong>Video URL:</strong> {analysis.videoUrl}
+            <strong>File Name:</strong> {analysis.fileName}
           </p>
           <p>
             <strong>Status:</strong> {analysis.status}
@@ -181,4 +182,3 @@ export default function Home() {
     </div>
   );
 }
-
