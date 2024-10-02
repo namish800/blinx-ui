@@ -3,6 +3,7 @@
 import { generateInstagramPost } from "@/services";
 import Image from "next/image";
 import { useState } from "react";
+import User from "@/app/assets/images/adUser.png"
 
 
 
@@ -13,40 +14,92 @@ const InstaPostGenerator = () => {
     const [captionList, setCaptionList] = useState([]);
     const [imageList, setImageList] = useState([]);
     const [hashtagList, setHashtagList] = useState([]);
+    const [progress, setProgress] = useState(1);
 
     const generatePosts = async() => {
-        setLoading(true)
+        
+        if(objective && postCount){setLoading(true)
         const res = await generateInstagramPost(objective, postCount);
         if(res?.step_output?.state?.captions.length > 0){
             setCaptionList(res?.step_output?.state?.captions);
             setImageList(res?.step_output?.state?.image_urls);
-            setHashtagList(res?.step_output?.state?.hashtags)
+            setHashtagList(res?.step_output?.state?.hashtags);
+            setProgress(progress + 1);
         }
-        setLoading(false)
+        setLoading(false)}
     }
 
+    const scrollLeft = () => {
+        const carousel: any = document.querySelector('.generatedPostCarousel');
+        carousel.scrollBy({ left: -520, behavior: 'smooth' }); // Scroll 520px left
+    };
+    
+    const scrollRight = () => {
+        const carousel: any = document.querySelector('.generatedPostCarousel');
+        carousel.scrollBy({ left: 520, behavior: 'smooth' }); // Scroll 520px right
+    };
+
     return(
-        <div className="postGeneratorWrapper">
+        <div className="postGeneratorWrapper poppins">
+            {progress === 1 && <>
             <h1>Generate Insta Post</h1>
             <form>
                 <p>Enter Detailed Objective for your Instagram Posts</p>
                 <input type="text" value={objective} className="appInput" name="objective" onChange={(event) => setObjective(event.target.value)} placeholder="Enter Detailed Objective for your new Instagram Posts" />
                 <p>Enter the number of posts you want to create</p>
-                <input type="number" value={postCount} min={1} max={4} onChange={(event) => setPostCount(Number(event.target.value))}  />
-                <button className="appButton" onClick={generatePosts} disabled={loading}>{loading ? 'Generating Posts...' : 'Generate Posts'}</button>
+                <input type="number" className="appInput" value={postCount} min={1} max={4} onChange={(event) => setPostCount(Number(event.target.value))}  />
+                <div>
+                    <button className={loading ? "appButton disabled" : "appButton"} onClick={generatePosts} disabled={loading}>{loading ? 'Generating Posts...' : 'Generate Posts'}</button>
+                </div>
             </form>
-            {/* <pre>{JSON.stringify(imageList, null, 2)}</pre>
-            <pre>{JSON.stringify(captionList, null, 2)}</pre>
-            <pre>{JSON.stringify(hashtagList, null, 2)}</pre> */}
-            {!loading && captionList.length && imageList.length && hashtagList.length && <div className="generatedPostWrapper">
-                <h1>Hastags</h1>
-                {hashtagList.map((hashtag: string, index: number) => {
-                    return(
-                        <p key={index}>{hashtag}</p>
-                    )
-                })}
+            </>}
+            {progress===2 && !loading && captionList.length > 0 && imageList.length > 0 && hashtagList.length > 0 && <div className="generatedPostWrapper">
+                
                 <h1>Posts</h1>
-                {
+                    <div className="instagramCarousel">
+                        {/* <button className="carousel-button right" onClick={scrollRight}>{">"}</button> */}
+                        <div className="carouselWrapper">
+                            {captionList.map((caption: string, index: number) => {
+                                return (
+                                    <div key={index} className="generatedPost">
+                                        <div className="postHeader">
+                                            <Image
+                                                src={User}
+                                                alt="user placeholder"
+                                                width={40}
+                                                height={40}
+                                                className="userAvatar"
+                                                loading="lazy"
+                                            />
+                                            <div className="postInfo">
+                                                <p className="postUsername">Blinxai.in</p>
+                                                <p className="postSponsored">Sponsored</p>
+                                            </div>
+                                        </div>
+                                        <h4 className="postCaption">{caption}</h4>
+                                        <Image
+                                            src={imageList[index]}
+                                            height={500}
+                                            width={500}
+                                            alt="AI generated post copy"
+                                            className="postImage"
+                                        />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        {/* <button className="carousel-button right" onClick={scrollRight}>{">"}</button> */}
+                    </div>
+                <h1>Hastags</h1>
+                <div className="hashTagListWrapper">
+                    {hashtagList.map((hashtag: string, index: number) => {
+                        return(
+                            <p key={index}>{hashtag}</p>
+                        )
+                    })}
+                </div>
+
+                {/* {
                     captionList.map((caption: string, index: number) => {
                         return(
                             <div key={index} className="generatedPost">
@@ -60,7 +113,7 @@ const InstaPostGenerator = () => {
                             </div>
                         )
                     })
-                }
+                } */}
             </div>
             }
         </div>

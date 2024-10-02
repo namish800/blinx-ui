@@ -1,0 +1,125 @@
+.postGeneratorWrapper{
+    flex-grow: 1;
+    padding: 60px;
+
+
+    .hashTagListWrapper{
+        width: 80vw;
+        padding: 20px;
+        border: 1px solid #fff;
+        border-radius: 12px;
+        display: flex;
+        justify-content: start;
+        margin: 20px 0 40px;
+        flex-wrap: wrap;
+        p{
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: #fff;
+            color: #000;
+            font-size: 0.7rem;
+            margin-right: 5px;
+            margin-bottom: 10px;
+        }
+    }
+
+
+    form{
+        p{
+            margin-top: 30px;
+        }
+        input{
+            margin: 10px 0 30px;
+        }
+    }
+
+    .instagramCarousel {
+        position: relative;
+        width: 80vw;
+        overflow: hidden;
+    }
+    
+    .carouselWrapper {
+        // position: relative;
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
+        gap: 20px;
+        padding: 20px;
+        scrollbar-width: none; /* Hide scrollbar in Firefox */
+    }
+    
+    .carouselWrapper::-webkit-scrollbar {
+        display: none; /* Hide scrollbar in Chrome */
+    }
+    
+    .generatedPost {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+        width: 500px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        overflow: hidden;
+    }
+    
+    .postHeader {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .userAvatar {
+        border-radius: 50%;
+    }
+    
+    .postInfo {
+        margin-left: 10px;
+    }
+    
+    .postUsername {
+        font-weight: bold;
+        font-size: 14px;
+    }
+    
+    .postSponsored {
+        font-size: 12px;
+        color: #888;
+    }
+    
+    .postCaption {
+        font-size: 16px;
+        margin: 10px 0;
+        color: #333;
+    }
+    
+    .postImage {
+        border-radius: 8px;
+        width: 100%;
+        height: auto;
+    }
+
+    
+    .carousel-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        border: none;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+        z-index: 1;
+    }
+    
+    .carousel-button.left {
+        left: 10px;
+    }
+    
+    .carousel-button.right {
+        right: 10px;
+    }
+    
+}

@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import './style.scss'
 
 const InstaPostGenerator = dynamic(() => import("@/components/InstaPostGenerator"))
 
