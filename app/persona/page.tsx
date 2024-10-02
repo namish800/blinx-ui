@@ -18,7 +18,6 @@ const PersonaTabs = dynamic(()=>import("@/components/PersonaTabs"))
 const Persona = () => {
     return(
         <div className="personaPage">
-            <h1>Add content so that we can analyse your brand</h1>
             <PersonaTabs />
         </div>
     )

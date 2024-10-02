@@ -1,7 +1,8 @@
 "use client"
 
-import { createBrandPersona } from "@/services";
-import { useState } from "react"
+import { USER_ID } from "@/config/app.config";
+import { createBrandPersona, getBrandPersona } from "@/services";
+import { useEffect, useState } from "react"
 
 export default function(){
 
@@ -9,6 +10,8 @@ export default function(){
     const [personaLoading, setPersonaLoading] = useState(false);
     const [persona, setPersona] = useState<any>({});
     const [loading, setLoading] = useState(false);
+    const [bpExist, setBpExist] = useState(false)
+    const userId = USER_ID;
 
 
     const createPersona = async() => {
@@ -17,6 +20,7 @@ export default function(){
             const res = await createBrandPersona(websiteUrl);
             if(Object.keys(res?.brand_persona).length > 0){
                 setPersona(res.brand_persona);
+                setBpExist(true);
             }
             setLoading(false)
         }
@@ -35,30 +39,57 @@ export default function(){
         return pattern.test(str);
     }
 
+    const getPersona = async() => {
+        setLoading(true);
+        const res = getBrandPersona(userId);
+        if(Object.keys(res).length > 0){
+            setPersona({
+                ...persona,
+                ...res
+            });
+            setBpExist(true)
+        }
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        getPersona();
+    }, [])
+
 
     return(
-        <div className="personaTabsWrapper">
-            <div className="tabs-header">
-                <h3 className={`tabsHeading`}>Link Website</h3>
-                {/* <button className={`tabs-button`}>Paste Text</button>
-                <button className={`tabs-button`}>Upload Content</button> */}
-            </div>
-            <div className="tabs-body">
-                <form className="persona-tabs-form">
-                    <label>Enter website URL to pull sample contents from</label>
-                    <input 
-                        type="url"
-                        pattern="https://.*"
-                        placeholder="Enter the URL of your brand's homepage" 
-                        name="websiteUrl"
-                        value={websiteUrl}
-                        className="appInput"
-                        onChange={(event) => setWebsiteURL(event.target.value)}
-                        required
-                    />
-                    <button type="submit" onClick={createPersona} className={loading || !isUrlValid(websiteUrl) ? "appButton disabled" : "appButton"} disabled={loading}>{loading ? 'Generating Persona...' : 'Build Persona'}</button>
-                </form>
-            </div>
+        <>
+            {loading && 
+                <div className="loadingPersona">
+                    <h1>Loading Persona...</h1>
+                </div>
+            }
+            { !loading && !bpExist &&
+                <div className="personaTabsWrapper">
+                    <div className="tabs-header">
+                        <h1>Add content so that we can analyse your brand</h1>
+                        <h3 className={`tabsHeading`}>Link Website</h3>
+                        {/* <button className={`tabs-button`}>Paste Text</button>
+                        <button className={`tabs-button`}>Upload Content</button> */}
+                    </div>
+                    <div className="tabs-body">
+                        <form className="persona-tabs-form">
+                            <label>Enter website URL to pull sample contents from</label>
+                            <input 
+                                type="url"
+                                pattern="https://.*"
+                                placeholder="Enter the URL of your brand's homepage" 
+                                name="websiteUrl"
+                                value={websiteUrl}
+                                className="appInput"
+                                onChange={(event) => setWebsiteURL(event.target.value)}
+                                required
+                            />
+                            <button type="submit" onClick={createPersona} className={loading || !isUrlValid(websiteUrl) ? "appButton disabled" : "appButton"} disabled={loading}>{loading ? 'Generating Persona...' : 'Build Persona'}</button>
+                        </form>
+                    </div>
+                </div>
+            }
             {Object.keys(persona).length > 0 && 
                 <div className="brandPeronaWrapper">
                     {persona?.purpose.length > 0 &&
@@ -147,6 +178,6 @@ export default function(){
                     }
                 </div>
             }
-        </div>
+        </>
     )
 }

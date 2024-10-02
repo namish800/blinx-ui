@@ -104,12 +104,21 @@ a {
   border-bottom: 1px solid #fff;
   padding: 20px 5px;
   color: #fff;
-  font-family: var(--font-poppinss);
+  font-family: var(--font-poppins);
 }
 
 .appTextArea:focus-visible{
   outline: 0px;
 } 
+
+
+.loadingWrapper{
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-poppins);
+}
 
 
 

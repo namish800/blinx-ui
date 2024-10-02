@@ -26,6 +26,19 @@ const createBrandPersona = async(brandUrl: string) => {
     }
 }
 
+const getBrandPersona = async(userId: string) => {
+    try{
+        const res = await fetch(`${APP_ENDPOINT}/getBrandPersona?user_id=${userId}`);
+        if(!res.ok){
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+    }catch(err){
+        console.log(`Error fetching brand persona: ${err}`);
+        return null
+    }
+}
+
 const generateTitles = async({blogTopic=""}: GenerateTitles) => {
     try{
         const res = await fetch(`${APP_ENDPOINT}/generateBlog`, {
@@ -192,6 +205,7 @@ const generateInstagramPost = async(objective: string, numberOfPosts: number) =>
 
 
 export {
+    getBrandPersona,
     generateTitles,
     generateOutlines,
     generateFinalBlog,

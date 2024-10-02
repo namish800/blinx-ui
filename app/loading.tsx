@@ -8,10 +8,13 @@
  *
  */
 
-
+import styles from './loading.module.css';
 const Loading = () => {
     return (
-        <h1>Loading</h1>
+        <div className={styles['loading-container']}>
+            <div className={styles.spinner}></div>
+            <p>Loading...</p>
+        </div>
     )
 }
 
