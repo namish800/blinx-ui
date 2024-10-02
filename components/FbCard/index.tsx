@@ -3,6 +3,7 @@ import User from "@/app/assets/images/adUser.png"
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ReplyIcon from '@mui/icons-material/Reply';
+import { Suspense } from "react";
 
 const FbCard = (props: any) => {
     return(
@@ -14,6 +15,8 @@ const FbCard = (props: any) => {
                     width={80}
                     height={80}
                     className="fbAdUser"
+                    loading="lazy"
+                    // blurDataURL={User}
                 />
                 <div>
                     <p className="fbUser">Blinxai.in</p>
@@ -27,6 +30,9 @@ const FbCard = (props: any) => {
                     src={props?.image}
                     height={400}
                     width={400}
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL="@/app/assets/images/blur.png"
                 />
                 <div className="adBoxInfo">
                     <div className="adBoxInfoLeft">

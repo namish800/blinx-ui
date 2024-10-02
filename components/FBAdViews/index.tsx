@@ -66,6 +66,17 @@ const FBAdViews = () => {
         setFinalLoading(false)
     }
 
+
+    const scrollLeft = () => {
+        const carousel: any = document.querySelector('.adCopiesList');
+        carousel.scrollBy({ left: -420, behavior: 'smooth' });
+    };
+    
+    const scrollRight = () => {
+        const carousel: any = document.querySelector('.adCopiesList');
+        carousel.scrollBy({ left: 420, behavior: 'smooth' });
+    };
+
     return(
         <div className="fbAdStarter">
             {
@@ -166,13 +177,17 @@ const FBAdViews = () => {
             {
                 progress===2 && adCopies.length > 0 && <div className="adCopiesWrapper">
                     <h1>Final Ad Copies</h1>
-                    <div className="adCopiesList">
-                        {adCopies?.length > 0 && adCopies.map((ad: any, index: number) => {
-                            return(
-                                <FbCard key={index} image={ad?.background_image_url} primary={ad?.content?.primary_text} desc={ad?.content?.description} headline={ad?.content?.headline} cta={ad?.content?.call_to_action} />
-                            )
-                        })}
-                        {/* <pre>{JSON.stringify(adCopies, null, 2)}</pre> */}
+                    <div className="carousel-wrapper">
+                        <button className="carousel-button left" onClick={scrollLeft}>{"<"}</button>
+                        <div className="adCopiesList">
+                            {adCopies?.length > 0 && adCopies.map((ad: any, index: number) => {
+                                return(
+                                    <FbCard key={index} image={ad?.background_image_url} primary={ad?.content?.primary_text} desc={ad?.content?.description} headline={ad?.content?.headline} cta={ad?.content?.call_to_action} />
+                                )
+                            })}
+                            {/* <pre>{JSON.stringify(adCopies, null, 2)}</pre> */}
+                        </div>
+                        <button className="carousel-button right" onClick={scrollRight}>{">"}</button>
                     </div>
                 </div>
             }
