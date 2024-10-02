@@ -4,13 +4,17 @@
   padding: 60px;
 }
 
+.landingImage{
+  object-fit: cover;
+}
 
 .landingBanner{
   width: 100%;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 150px;
+  height: 250px;
   box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
   /* background: rgba(255, 255, 255, 0.5); */
   border-radius: 20px;

@@ -15,14 +15,20 @@ import styles from "./page.module.css";
 import RecentSection from "@/components/RecentSection";
 import AnalyticSection from "@/components/AnalyticsSection";
 import Link from "next/link";
+import blinxCover from '@/app/assets/images/blinxCover.png'
 
 export default function Home() {
   return (
     <div className={`poppins ${styles.landingPage}`}>
       <main className={styles.main}>
         <div className={styles.landingBanner}>
-          {/* <Image /> */}
-          <Link href="/persona"><button className={styles.brandButton}>Add Brand Persona</button></Link>
+          <Image 
+            src={blinxCover}
+            alt="cover background"
+            fill
+            className={styles.landingImage}
+          />
+          {/* <Link href="/persona"><button className={styles.brandButton}>Add Brand Persona</button></Link> */}
         </div>
         <h1>Common Content Types</h1>
         <div className={styles.commonContents}>
