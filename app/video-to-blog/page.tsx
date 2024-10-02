@@ -144,19 +144,20 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className={`${styles.videoToBlogPage} poppins`}>
       <h1>Video Analysis</h1>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <input
           type="file"
           accept="video/*"
+          className='appInput'
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             const selectedFile = e.target.files ? e.target.files[0] : null;
             setFile(selectedFile);
           }}
           required
         />
-        <button type="submit">Analyze Video</button>
+        <button className={file ? 'appButton' : 'appButton disabled'} type="submit">Analyze Video</button>
       </form>
       {error && <p className="error">{error}</p>}
 
@@ -167,7 +168,7 @@ export default function Home() {
           <p>
             <strong>File Name:</strong> {analysis.fileName}
           </p>
-          <p>
+          <p className={styles.statusCheck}>
             <strong>Status:</strong> {analysis.status}
           </p>
           {analysis.status === 'completed' && analysis.markdownContent && (

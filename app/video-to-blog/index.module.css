@@ -1,3 +1,11 @@
+.videoToBlogPage{
+  padding: 60px;
+}
+
+
+.statusCheck{
+  margin-bottom: 30px;
+}
 
 .markdownContent img {
     max-width: 100%;
