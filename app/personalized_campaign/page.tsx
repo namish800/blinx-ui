@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import CSVViewer from './CSVViewer';
 
 // Define the interface for the file list API response
 interface FileListResponse {
