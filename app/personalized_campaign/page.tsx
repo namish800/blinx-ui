@@ -34,8 +34,7 @@ export default function CampaignPage() {
   // Fetch the list of files uploaded by the user
   useEffect(() => {
     const fetchFiles = async () => {
-      // Simulating the fetch request with static data
-      let files = ['test_size_5.csv'];
+      let files = ['test_size_5.csv']; // Simulating the fetch request with static data
       setFiles(files);
     };
     fetchFiles();
@@ -91,7 +90,8 @@ export default function CampaignPage() {
       localStorage.setItem('campaignResponse', JSON.stringify(data)); // Save response in localStorage
       pollStatus(data.session_id); // Start polling the status of the request
     } catch (err) {
-      setError('Error submitting campaign: ' + err.message);
+      const errorMessage = (err as Error).message || 'An unknown error occurred';
+      setError('Error submitting campaign: ' + errorMessage);
       setLoading(false);
     }
   };
@@ -119,7 +119,8 @@ export default function CampaignPage() {
         }
       } catch (err) {
         clearInterval(intervalId);
-        setError('Error polling task status: ' + err.message);
+        const errorMessage = (err as Error).message || 'An unknown error occurred';
+        setError('Error polling task status: ' + errorMessage);
         setLoading(false);
       }
     }, 5000); // Poll every 5 seconds
