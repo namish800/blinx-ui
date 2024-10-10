@@ -22,9 +22,13 @@ interface TaskStatusResponse {
 }
 
 const userId = 'a093b5be-ab1c-46eb-bdca-1ee223c6a948'; // Hardcoded for simplicity
+interface FileData {
+  file_name: string;
+  file_url: string;
+}
 
 export default function CampaignPage() {
-  const [files, setFiles] = useState<string[]>([]);
+  const [files, setFiles] = useState<FileData[]>([]);
   const [campaignObjective, setCampaignObjective] = useState<string>('product launch');
   const [campaignDetails, setCampaignDetails] = useState<string>('');
   const [selectedFileName, setSelectedFileName] = useState<string>('');
@@ -35,9 +39,22 @@ export default function CampaignPage() {
   // Fetch the list of files uploaded by the user
   useEffect(() => {
     const fetchFiles = async () => {
-      let files = ['test_size_5.csv']; // Simulating the fetch request with static data
-      setFiles(files);
+      try {
+          const response = await fetch(
+          "https://blinx-backend-eze3e9drepffcte5.centralindia-01.azurewebsites.net//getCSVFiles?user_id=a093b5be-ab1c-46eb-bdca-1ee223c6a948"
+          );
+          if (!response.ok) {
+          throw new Error("Failed to fetch files.");
+          }
+          const data = await response.json();
+          setFiles(data.files);
+      } catch (err) {
+          setError((err as Error).message || "An unknown error occurred");
+      } finally {
+          setLoading(false);
+      }
     };
+
     fetchFiles();
 
     // Load stored response (session_id, result, status) from localStorage if available
@@ -176,8 +193,8 @@ export default function CampaignPage() {
             >
               <option value="">-- Select a file --</option>
               {files.map((file, index) => (
-                <option key={index} value={file}>
-                  {file}
+                <option key={index} value={file.file_name}>
+                  {file.file_name}
                 </option>
               ))}
             </select>
