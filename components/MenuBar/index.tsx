@@ -28,11 +28,13 @@ const MenuBar = () => {
                 width={150}
             />
             <Link href={"/"} className={currentPath==="/" ? "desktop-menu-link active" : "desktop-menu-link"}>Home</Link>
-            <Link href={"/persona"} className={currentPath.includes("persona") ? "desktop-menu-link active" : "desktop-menu-link"}>Brand Persona</Link>
-            <Link href={"/blog-generator"} className={currentPath.includes("blog-generator") ? "desktop-menu-link active" : "desktop-menu-link"}>Blog Generator</Link>
+            <Link href={"/persona"} className={currentPath === "/persona" ? "desktop-menu-link active" : "desktop-menu-link"}>Brand Persona</Link>
+            <Link href={"/create-content"} className={currentPath.includes("create-content") || currentPath.includes("blog-generator") || currentPath.includes("post-generator") || currentPath.includes("video-to-blog") ? "desktop-menu-link active" : "desktop-menu-link"}>Create Content</Link>
+            <Link href={"/campaigns"} className={currentPath.includes("campaign") || currentPath.includes("ad-generator") ? "desktop-menu-link active" : "desktop-menu-link"}>Campaigns</Link>
+            {/* <Link href={"/blog-generator"} className={currentPath.includes("blog-generator") ? "desktop-menu-link active" : "desktop-menu-link"}>Blog Generator</Link>
             <Link href={"/ad-generator"} className={currentPath.includes("ad-generator") ? "desktop-menu-link active" : "desktop-menu-link"}>FB Ad Generator</Link>
             <Link href={"/post-generator"} className={currentPath.includes("post-generator") ? "desktop-menu-link active" : "desktop-menu-link"}>Post Generator</Link>
-            <Link href={"/video-to-blog"} className={currentPath.includes("video-to-blog") ? "desktop-menu-link active" : "desktop-menu-link"}>Video To Blog</Link>
+            <Link href={"/video-to-blog"} className={currentPath.includes("video-to-blog") ? "desktop-menu-link active" : "desktop-menu-link"}>Video To Blog</Link> */}
         </div>
     )
 }

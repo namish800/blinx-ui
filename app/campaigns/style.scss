@@ -1,0 +1,23 @@
+.campaignPageWrapper{
+    padding: 60px;
+    flex-grow: 1;
+    font-family: var(--font-poppins);
+
+    .commonContents{
+        margin-top: 4rem;
+        display: flex;
+        justify-content: start;
+        gap: 4rem;
+
+        .contentType{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .previousCampaigns{
+        margin-top: 3rem;
+    }
+}

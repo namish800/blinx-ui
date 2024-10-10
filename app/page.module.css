@@ -8,6 +8,10 @@
   object-fit: cover;
 }
 
+.mainHeading{
+  margin-bottom: 40px;
+}
+
 .landingBanner{
   width: 100%;
   position: relative;

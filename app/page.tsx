@@ -13,9 +13,11 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import RecentSection from "@/components/RecentSection";
-import AnalyticSection from "@/components/AnalyticsSection";
 import Link from "next/link";
 import blinxCover from '@/app/assets/images/blinxCover.png'
+import dynamic from "next/dynamic";
+
+const AnalyticSection = dynamic(() => import("@/components/AnalyticsSection"))
 
 export default function Home() {
   return (
@@ -30,7 +32,8 @@ export default function Home() {
           />
           {/* <Link href="/persona"><button className={styles.brandButton}>Add Brand Persona</button></Link> */}
         </div>
-        <h1>Common Content Types</h1>
+        <h1 className={styles.mainHeading}>Welcome to Blinx AI Marketing</h1>
+        {/* <h1>Common Content Types</h1>
         <div className={styles.commonContents}>
           <Link href="/ad-generator" >
             <div className={styles.contentType}>
@@ -56,7 +59,7 @@ export default function Home() {
               <p className={styles.contentTypeName}>Video to Blog</p>
             </div>
           </Link>
-        </div>
+        </div> */}
         <RecentSection />
         <AnalyticSection />
       </main>
