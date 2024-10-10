@@ -41,7 +41,7 @@ export default function(){
 
     const getPersona = async() => {
         setLoading(true);
-        const res = getBrandPersona(userId);
+        const res = await getBrandPersona(userId);
         if(Object.keys(res).length > 0){
             setPersona({
                 ...persona,
@@ -92,7 +92,7 @@ export default function(){
             }
             {Object.keys(persona).length > 0 && 
                 <div className="brandPeronaWrapper">
-                    <h1 style={{marginBottom: "30px"}}>Your Brand Persona</h1>
+                    <h1 style={{marginBottom: "30px"}}>Your Brand's Persona</h1>
                     {persona?.purpose.length > 0 &&
                         <>
                             <h3>Purpose</h3>
