@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import './style.scss'
 
 // Define the interface for the file list API response
 interface FileListResponse {
@@ -127,7 +128,7 @@ export default function CampaignPage() {
   };
 
   return (
-    <div className="container">
+    <div className="personalized-campaign poppins">
       <h1>Campaign Submission</h1>
 
       {error && <p className="error">{error}</p>}
@@ -155,6 +156,7 @@ export default function CampaignPage() {
             {/* Campaign Details Textarea */}
             <label htmlFor="details">Campaign Details</label>
             <textarea
+              className='appInput'
               id="details"
               value={campaignDetails}
               onChange={(e) => setCampaignDetails(e.target.value)}
@@ -181,7 +183,7 @@ export default function CampaignPage() {
             </select>
           </div>
 
-          <button type="submit" className="submit-btn">Submit Campaign</button>
+          <button type="submit" className=" appButton">Submit Campaign</button>
         </form>
       )}
 
@@ -196,75 +198,6 @@ export default function CampaignPage() {
           {/* <CSVViewer csvUrl={result.result} /> */}
         </div>
       )}
-
-      <style jsx>{`
-        .container {
-          padding: 20px;
-          color: #fff;
-          max-width: 800px;
-          margin: auto;
-        }
-
-        .form {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
-
-        .form-group {
-          display: flex;
-          flex-direction: column;
-        }
-
-        label {
-          margin-bottom: 5px;
-          font-size: 16px;
-        }
-
-        select,
-        textarea,
-        input {
-          padding: 10px;
-          font-size: 16px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          background-color: #333;
-          color: #fff;
-        }
-
-        textarea {
-          height: 100px;
-          resize: none;
-        }
-
-        .submit-btn {
-          padding: 12px 20px;
-          background-color: #007bff;
-          color: #fff;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 16px;
-        }
-
-        .submit-btn:hover {
-          background-color: #0056b3;
-        }
-
-        .result {
-          margin-top: 20px;
-        }
-
-        .result-link {
-          color: #007bff;
-          text-decoration: underline;
-        }
-
-        .error {
-          color: red;
-          font-weight: bold;
-        }
-      `}</style>
     </div>
   );
 }
