@@ -13,6 +13,9 @@ export default function(){
     const [bpExist, setBpExist] = useState(false)
     const userId = USER_ID;
 
+    const updatePersona = () => {
+        setBpExist(false)
+    }
 
     const createPersona = async() => {
         if(isUrlValid(websiteUrl)){
@@ -20,7 +23,7 @@ export default function(){
             const res = await createBrandPersona(websiteUrl);
             if(Object.keys(res?.brand_persona).length > 0){
                 setPersona(res.brand_persona);
-                setBpExist(true);
+                // setBpExist(true);
             }
             setLoading(false)
         }
@@ -47,7 +50,7 @@ export default function(){
                 ...persona,
                 ...res
             });
-            setBpExist(true)
+            // setBpExist(true)
         }
         setLoading(false);
     }
@@ -92,7 +95,7 @@ export default function(){
             }
             {Object.keys(persona).length > 0 && 
                 <div className="brandPeronaWrapper">
-                    <h1 style={{marginBottom: "30px"}}>Your Brand's Persona</h1>
+                    <h1 style={{marginBottom: "30px", marginTop: "30px"}}>Your Brand's Persona</h1>
                     {persona?.purpose.length > 0 &&
                         <>
                             <h3>Purpose</h3>
