@@ -14,3 +14,35 @@
     color: #000;
     font-family: var(--font-poppins);
 }
+
+.fileSection {
+    margin-top: 20px;
+}
+
+.fileSection h2 {
+font-size: 18px;
+margin-bottom: 10px;
+}
+
+.fileSection ul {
+list-style-type: none;
+padding: 0;
+}
+
+.fileSection li {
+margin-bottom: 10px;
+}
+
+.fileSection a {
+color: #007bff;
+text-decoration: underline;
+}
+
+.fileSection a:hover {
+color: #0056b3;
+}
+
+.error {
+color: red;
+font-weight: bold;
+}
