@@ -9,6 +9,7 @@ const nextConfig = {
             pathname: '/private/org-nxGPxYmLSIb59XhORRBn58Oo/**',
           },
         ],
+        domains: ['i.imgur.com'],
       },
 };
 
